@@ -88,7 +88,7 @@ elementsMap.set('.bottom__front', {
 
 addBlocks();
 setSizes();
-showSidesSizes();
+showSizes();
 
 setPatterns({
     name: 'patterns',
@@ -226,8 +226,6 @@ function addBlocks() {
                 }
 
                 currentBlock.style.width = `${item}px`;
-                const sizeElem = currentBlock.querySelector('.surface__size-text');
-                sizeElem.innerHTML = `${item}mm`;
 
                 if (i > 0) {
                     parent.appendChild(currentBlock);
@@ -238,19 +236,17 @@ function addBlocks() {
     });
 }
 
-function showSidesSizes() {
-    const sides = document.querySelectorAll('.surface--side-right');
+// ------------------------------
+
+function showSizes() {
+    const surfaces = document.querySelectorAll('.surface[data-content]');
     let sizes;
 
-    sides.forEach(item => {
-        console.dir(item);
-        if (item.className.indexOf('top') > -1) {
-            sizes = elementsMap.get('.top__side');
-        }
-        else {
-            sizes = elementsMap.get('.bottom__side');
-        }
+    surfaces.forEach(item => {
+        const contentKey = item.dataset.content;
+        let size = getComputedStyle(item)[contentKey];
+        size = size.replace('px', 'mm');
         const sizeElem = item.querySelector('.surface__size-text');
-        sizeElem.innerHTML = `${sizes.height}mm`;
+        sizeElem.innerHTML = size;
     });
 }
