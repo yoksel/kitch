@@ -1,0 +1,14 @@
+{
+    "extends": "yandex",
+    "env": {
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "indent": ["error", 4]
+    },
+    "parserOptions": {
+       "ecmaVersion": 6,
+        "sourceType": "module"
+    }
+}
