@@ -8,6 +8,16 @@ BODY {
     color: black;
 }
 
+H2 {
+    margin: 0;
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
 .page {
     perspective: 1000px;
     perspective-origin: center -100px;
@@ -16,12 +26,6 @@ BODY {
     height: 100%;
     justify-content: center;
     align-items: center;
-}
-
-H2 {
-    margin: 0;
-    margin-bottom: 5px;
-    font-size: 15px;
 }
 
 .wrapper {
@@ -42,7 +46,7 @@ H2 {
 }
 
 .scene {
-    padding: 1em;
+    padding: 2em;
     flex-shrink: 0;
     transform-style: preserve-3d;
     transform: rotateY(45deg);
@@ -71,21 +75,21 @@ H2 {
 .surface {
     position: absolute;
     transform-style: preserve-3d;
-    background-color: hsla(40, 100%, 50%, .5);
+    background-color: hsla(40, 50%, 60%, .5);
+    background-size: auto 100%;
+    background-position: center center;
     outline: 1px solid rgba(0,0,0,.5);
 }
 
 .surface--front {
     position: relative;
     width: 100%;
-    background-color: hsla(0, 100%, 50%, .5);
 }
 
 .surface--top {
     width: 100%;
     transform: rotateX(-90deg);
     transform-origin: top;
-    background-color: yellowgreen;
 }
 
 .surface--bottom {
@@ -94,11 +98,6 @@ H2 {
     left: 0;
     transform: rotateX(90deg);
     transform-origin: bottom;
-    background-color: green;
-}
-
-.surface--side {
-    background-color: orange;
 }
 
 .surface--side-left {
@@ -119,6 +118,13 @@ H2 {
     display: flex;
     text-align: center;
     font-size: 12px;
+    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white;
+    cursor: pointer;
+    transition: background .25s;
+}
+
+.surface__size:hover {
+    background: rgba(0,0,0,.25);
 }
 
 .surface__size--vertical {
@@ -132,7 +138,6 @@ H2 {
    transform-origin: left;
 }
 
-
 .surface__size::before,
 .surface__size::after {
     content: "";
@@ -140,11 +145,26 @@ H2 {
     justify-content: space-between;
 }
 
-.surface__size--vertical .surface__size-text{
-  transform: rotateZ(-90deg);
-  height: 1.4em;
-  line-height: 1;
+.surface__size-text {
+    max-width: 100%;
 }
+
+.surface__size--vertical .surface__size-text {
+  display: flex;
+  justify-content: center;
+  transform: rotateZ(-90deg);
+}
+
+.surface__size-input {
+    max-width: 100%;
+    font: inherit;
+    line-height: 1;
+}
+
+.surface__size-input:focus {
+    outline: 2px solid rgba(0,0,0,.5);
+}
+
 /* Patterns
 ------------------------------ */
 .chooser {

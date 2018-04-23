@@ -3,6 +3,7 @@ import './styles.css';
 import {config} from './data/config';
 import {patterns} from './data/patterns';
 import {walls} from './data/walls';
+import {elementsMap, setSizes} from './elementsMap';
 
 const images = require.context('./img/', true);
 
@@ -10,6 +11,15 @@ const patternsElem = document.querySelector('.patterns');
 const wallsElem = document.querySelector('.walls');
 const rotatorRangeElem = document.querySelector('.rotator__range');
 const sceneElem = document.querySelector('.scene');
+
+const surfaceSizesCss = document.querySelector('.surface-sizes-css');
+const surfacePatternsCss = document.querySelector('.surface-patterns-css');
+const wallsCss = document.querySelector('.walls-css');
+
+const changeSizeInput = document.querySelector('.surface__size-input');
+
+let currentSurfaceItem;
+
 const blocks = [
     {
         name: 'top',
@@ -23,71 +33,11 @@ const blocks = [
     },
 ];
 
-const surfaceSizesCss = document.querySelector('.surface-sizes-css');
-const surfacePatternsCss = document.querySelector('.surface-patterns-css');
-const wallsCss = document.querySelector('.walls-css');
-
-const commonWidth = getWidth();
-
-// ------------------------------
-
-const elementsMap = new Map();
-elementsMap.set('.wrapper', {
-    width: commonWidth.max,
-});
-elementsMap.set('.scene', {
-    width: commonWidth.max,
-    height: config.verticalGap + config.top.height + config.bottom.height
-});
-
-elementsMap.set('.block--top', {
-    width: commonWidth.top,
-    height: config.top.height,
-    transform: `translateZ(${config.top.deep}px)`,
-});
-elementsMap.set('.top__top', {
-    width: commonWidth.top,
-    height: config.top.deep,
-});
-elementsMap.set('.top__bottom', {
-    width: commonWidth.top,
-    height: config.top.deep,
-});
-elementsMap.set('.top__side', {
-    width: config.top.deep,
-    height: config.top.height,
-});
-elementsMap.set('.top__front', {
-    width: config.top.width,
-    height: config.top.height,
-});
-
-elementsMap.set('.block--bottom', {
-    width: commonWidth.bottom,
-    height: config.bottom.height,
-    transform: `translateZ(${config.bottom.deep}px)`,
-});
-elementsMap.set('.bottom__top', {
-    width: commonWidth.bottom,
-    height: config.bottom.deep,
-});
-elementsMap.set('.bottom__bottom', {
-    width: commonWidth.bottom,
-    height: config.bottom.deep,
-});
-elementsMap.set( '.bottom__side', {
-    width: config.bottom.deep,
-    height: config.bottom.height,
-});
-elementsMap.set('.bottom__front', {
-    width: config.bottom.width,
-    height: config.bottom.height,
-});
-
 // ------------------------------
 
 addBlocks();
 setSizes();
+setSizesStyles();
 showSizes();
 
 setPatterns({
@@ -111,7 +61,7 @@ rotatorRangeElem.addEventListener('input', function () {
 
 // ------------------------------
 
-function setSizes() {
+function setSizesStyles() {
     const stylesList = [];
     for([key, values] of elementsMap) {
         const valuesList = [];
@@ -176,36 +126,7 @@ function setPatterns(params) {
 function setPattern(target, imgPath, styles) {
     styles.innerHTML = `${target} {
         background-image: url(${imgPath});
-        background-size: auto 100%;
     }`;
-}
-
-// ------------------------------
-
-function getWidth() {
-    let widthSets = [
-        config.top.width,
-        config.bottom.width
-    ];
-
-    widthSets = widthSets.map(widthSet => {
-
-        if (typeof widthSet === 'object') {
-
-            widthSet = widthSet.reduce((result, item) => {
-                result += item;
-                return result;
-            }, 0)
-        }
-
-        return widthSet;
-    });
-
-    return {
-        top: widthSets[0],
-        bottom: widthSets[1],
-        max: Math.max(...widthSets)
-    };
 }
 
 // ------------------------------
@@ -226,6 +147,8 @@ function addBlocks() {
                 }
 
                 currentBlock.style.width = `${item}px`;
+                currentBlock.dataset.line = name;
+                currentBlock.dataset.pos = i;
 
                 if (i > 0) {
                     parent.appendChild(currentBlock);
@@ -242,11 +165,114 @@ function showSizes() {
     const surfaces = document.querySelectorAll('.surface[data-content]');
     let sizes;
 
-    surfaces.forEach(item => {
-        const contentKey = item.dataset.content;
-        let size = getComputedStyle(item)[contentKey];
+    surfaces.forEach(surfaceItem => {
+        const contentKey = surfaceItem.dataset.content;
+        let size = getComputedStyle(surfaceItem)[contentKey];
         size = size.replace('px', 'mm');
-        const sizeElem = item.querySelector('.surface__size-text');
-        sizeElem.innerHTML = size;
+        const sizeTextElem = surfaceItem.querySelector('.surface__size-text');
+        sizeTextElem.innerHTML = size;
+
+        const sizeElem = surfaceItem.querySelector('.surface__size');
+
+        sizeElem.addEventListener('click', () => {
+            if(surfaceItem.dataset.isEditing === 'true') {
+                return;
+            }
+            if(currentSurfaceItem && currentSurfaceItem !== sizeElem) {
+                const currentSizeTextElem = currentSurfaceItem.querySelector('.surface__size-input');
+                removeSizeInput(currentSurfaceItem, currentSizeTextElem.value);
+            }
+
+            currentSurfaceItem = surfaceItem;
+            addSizeInput(surfaceItem);
+        });
     });
 }
+
+// ------------------------------
+
+function addSizeInput(surfaceItem) {
+    if(surfaceItem.dataset.isEditing === 'true') {
+        return;
+    }
+
+    surfaceItem.dataset.isEditing = true;
+
+    const sizeTextElem = surfaceItem.querySelector('.surface__size-text');
+    const oldValue = sizeTextElem.innerText.replace('mm', '');
+    surfaceItem.dataset.oldValue = oldValue;
+    changeSizeInput.value = oldValue;
+    sizeTextElem.innerHTML = '';
+    sizeTextElem.appendChild(changeSizeInput);
+
+    changeSizeInput.addEventListener('input', changeSizeForItem);
+
+    // Handle one event at the time
+    changeSizeInput.onkeyup = function (ev) {
+        ev.stopPropagation();
+
+        // Enter or escape
+        if (ev.keyCode !== 13 && ev.keyCode !== 27) {
+            return;
+        }
+
+        let value = changeSizeInput.value;
+        // If escape, set old value
+        if (ev.keyCode === 27) {
+            value = oldValue;
+        }
+
+        changeSizeInput.removeEventListener('input', changeSizeForItem);
+        removeSizeInput(surfaceItem, value);
+    };
+
+    function changeSizeForItem(ev) {
+        if (surfaceItem.dataset.isEditing === 'false') {
+            return;
+        }
+        ev.stopPropagation();
+        changeSize(changeSizeInput.value, surfaceItem);
+    }
+}
+
+// ------------------------------
+
+function changeSize(size, surfaceItem) {
+    const line = surfaceItem.dataset.line;
+    const content = surfaceItem.dataset.content;
+    const pos = surfaceItem.dataset.pos;
+    surfaceItem.style[content] = `${size}px`;
+
+    if (pos) {
+        config[line][content][pos] = +size;
+    }
+    else {
+        config[line][content] = +size;
+    }
+
+
+    updateSizes();
+}
+
+// ------------------------------
+
+function updateSizes() {
+    setSizes();
+    setSizesStyles();
+}
+
+// ------------------------------
+
+function removeSizeInput(surfaceItem, value) {
+    if (!!surfaceItem.dataset.isEditing === true) {
+        surfaceItem.dataset.isEditing = false;
+        const sizeTextElem = surfaceItem.querySelector('.surface__size-text');
+        sizeTextElem.innerHTML = `${value}mm`;
+        currentSurfaceItem = null;
+
+        changeSize(+value, surfaceItem);
+        updateSizes();
+    }
+}
+
+// ------------------------------

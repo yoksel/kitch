@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Мебеля</title>
+        <title>Кубики на цветом фоне</title>
         <meta name="robots" content="noindex">
         <style class="surface-sizes-css"></style>
         <style class="surface-patterns-css"></style>
@@ -20,7 +20,9 @@
                             <div class="top__bottom surface surface--bottom"></div>
                             <div
                                 class="top__side surface surface--side surface--side-right"
-                                data-content="height">
+                                data-content="height"
+                                data-line="top"
+                                >
                                 <div class="surface__size surface__size--vertical">
                                     <div class="surface__size-text"></div>
                                 </div>
@@ -42,7 +44,8 @@
                             <div class="bottom__bottom surface surface--bottom"></div>
                             <div
                                 class="bottom__side surface surface--side surface--side-right"
-                                data-content="height">
+                                data-content="height"
+                                data-line="bottom">
                                 <div class="surface__size surface__size--vertical">
                                     <div class="surface__size-text"></div>
                                 </div>
@@ -77,6 +80,10 @@
                     <div class="chooser__content walls"></div>
                 </div>
             </aside>
+        </div>
+
+        <div class="hidden">
+            <input type="number" min="0" max="1000" class="surface__size-input">
         </div>
     </body>
 </html>
