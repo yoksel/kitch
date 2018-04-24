@@ -1,20 +1,20 @@
 const config = {
     top: {
         width: [
-            50,
+            45,
             150,
-            100,
-            50
+            90,
+            45
         ],
         height: 60,
         deep: 40
     },
     bottom: {
         width: [
-            250,
+            60,
             150,
-            100,
-            50
+            90,
+            45
         ],
         height: 100,
         deep: 60

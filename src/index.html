@@ -12,6 +12,12 @@
     <body class="page">
 
         <div class="wrapper">
+            <aside class="aside aside--sizes">
+                <div class="chooser">
+                    <div class="chooser__content config"></div>
+                </div>
+            </aside>
+
             <div class="content">
                 <div class="scene wall">
                     <div class="line line--top top">
@@ -69,7 +75,7 @@
                 </div>
             </div>
 
-            <aside class="aside">
+            <aside class="aside aside--design">
                 <div class="chooser">
                     <div class="chooser__title">Цвет панелей</div>
                     <div class="chooser__content patterns"></div>
@@ -83,7 +89,10 @@
         </div>
 
         <div class="hidden">
-            <input type="number" min="0" max="1000" class="surface__size-input">
+            <input
+                type="number"
+                min="0" max="1000"
+                class="size-input">
         </div>
     </body>
 </html>
