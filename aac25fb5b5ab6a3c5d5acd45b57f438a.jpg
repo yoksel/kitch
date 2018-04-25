@@ -1,0 +1,1 @@
+module.exports = __webpack_public_path__ + "img/Bosch-HBN211E4.jpg";
