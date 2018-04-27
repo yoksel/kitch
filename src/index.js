@@ -1,17 +1,22 @@
 import './styles.css';
 
 import {config} from './data/config';
-import {goods} from './data/goods';
 import {dictionary} from './data/dictionary';
-import {setSizes, setSizesStyles, updateSizes} from './sizesHandlers';
-import {addPatterns, setPatterns} from './patternsHandlers';
-import {changeSizeInput} from './changeSizeInput';
+
+// import {setSizes, setSizesStyles, updateSizes} from './lib/sizesHandlers';
+import {addPatterns, setPatterns} from './lib/patternsHandlers';
+import {changeSizeInput} from './lib/changeSizeInput';
+import {HotSpot} from './lib/HotSpot';
+import {createWalls} from './lib/Walls';
+
+import {RequestUrl} from './lib/RequestUrl';
+const requestUrl = new RequestUrl();
 
 const images = require.context('./img/', true);
 
 const configElem = document.querySelector('.config');
 const rotatorRangeElem = document.querySelector('.rotator__range');
-const sceneElem = document.querySelector('.scene');
+const wallsElem = document.querySelector('.walls');
 
 const changeSizeInputElem = document.querySelector('.surface__size-input');
 
@@ -24,64 +29,65 @@ const chooserClasses = {
     current: 'chooser__item--current'
 };
 
-// console.log(goods);
-
-const blocks = [
-    {
-        name: 'top',
-        parent: document.querySelector('.block--top'),
-        block: document.querySelector('.top__front'),
-    },
-    {
-        name: 'bottom',
-        parent: document.querySelector('.block--bottom'),
-        block: document.querySelector('.bottom__front')
-    },
-];
-
 // ------------------------------
 
-addBlocks();
-addPatterns();
+// addPatterns();
 
-setSizes();
-setSizesStyles();
+createWalls();
+addBlocks();
+
+// setSizes();
+// setSizesStyles();
 
 showSizes();
 showConfig();
 
 rotatorRangeElem.addEventListener('input', function () {
-    sceneElem.style.transform = `rotateY(${this.value}deg)`;
+    wallsElem.style.transform = `rotateY(${this.value}deg)`;
 });
-
 
 // ------------------------------
 
 function addBlocks() {
+    const blocks = [
+        {
+            name: 'top',
+            block: document.querySelectorAll('.top__front'),
+        },
+        {
+            name: 'bottom',
+            block: document.querySelectorAll('.bottom__front')
+        },
+    ];
+
+
+    console.log(config);
+
     blocks.forEach(item => {
-        const name = item.name;
-        let widthSet = config[name].width;
-        const block = item.block;
-        const parent = item.parent;
+        // const name = item.name;
+        // let widthSet = config[name].width;
+        // const block = item.block;
+        // const parent = item.parent;
 
-        if (typeof widthSet === 'object') {
-            widthSet.forEach((item, i) => {
-                let currentBlock = block.cloneNode(true);
+        // if (typeof widthSet === 'object') {
+        //     widthSet.forEach((item, i) => {
+        //         let newBlock = block.cloneNode(true);
 
-                if (i === 0) {
-                    currentBlock = block;
-                }
+        //         if (i === 0) {
+        //             newBlock = block;
+        //         }
 
-                currentBlock.style.width = `${item}px`;
-                currentBlock.dataset.line = name;
-                currentBlock.dataset.pos = i;
+        //         newBlock = new HotSpot(newBlock);
 
-                if (i > 0) {
-                    parent.appendChild(currentBlock);
-                }
+        //         newBlock.style.width = `${item}px`;
+        //         newBlock.dataset.line = name;
+        //         newBlock.dataset.pos = i;
 
-            })
-        }
+        //         if (i > 0) {
+        //             parent.appendChild(newBlock);
+        //         }
+        //     })
+        // }
     });
 }
 
@@ -183,5 +189,3 @@ function showConfig() {
         configElem.appendChild(listElem);
     })
 }
-
-// ------------------------------

@@ -1,5 +1,5 @@
-import {config} from './data/config';
-import {updateSizes} from './sizesHandlers';
+import {config} from '../data/config';
+// import {updateSizes} from './sizesHandlers';
 
 const changeSizeInputElem = document.querySelector('.size-input');
 let currentSizeInput;

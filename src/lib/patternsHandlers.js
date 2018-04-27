@@ -1,5 +1,5 @@
-import {patterns} from './data/patterns';
-import {walls} from './data/walls';
+import {patterns} from '../data/patterns';
+import {walls} from '../data/walls';
 
 const patternsElem = document.querySelector('.patterns');
 const wallsElem = document.querySelector('.walls');
