@@ -1,10 +1,9 @@
 import {config} from '../data/config';
 
-const frontOptimalWidth = getFrontOptimalWidth();
-const frontDeeps = getDeeps([
-    config.walls['front'].top.deep,
-    config.walls['front'].bottom.deep
-]);
+let frontOptimalWidth;
+let frontDeeps;
+
+setDefaults();
 
 class elementStyles {
     constructor(key) {
@@ -71,16 +70,16 @@ class elementStyles {
 
         lines.forEach(line => {
             this.stylesMap.set(`${wallClass} .${line}__block`, {
-                width: commonWidth[line],
+                // width: commonWidth[line],
                 height: this.config[line].height,
                 transform: `translateZ(${this.config[line].deep}px)`,
             });
             this.stylesMap.set(`${wallClass} .${line}__top`, {
-                width: commonWidth[line],
+                width: '100%',
                 height: this.config[line].deep,
             });
             this.stylesMap.set(`${wallClass} .${line}__bottom`, {
-                width: commonWidth[line],
+                width: '100%',
                 height: this.config[line].deep,
             });
             this.stylesMap.set(`${wallClass} .${line}__side`, {
@@ -90,10 +89,10 @@ class elementStyles {
 
             this.config[line].width.forEach((itemWidth, i)=> {
                 const topWidthLength = this.config[line].width.length;
-                const selector = `${wallClass} .${line}__front:nth-child(${topWidthLength}n + ${i + 1})`;
+                const selector = `${wallClass} .${line}__block:nth-child(${topWidthLength}n + ${i + 1})`;
 
                 this.stylesMap.set(selector, {
-                    width: itemWidth,
+                    width: itemWidth.value,
                     height: this.config[line].height,
                 });
             });
@@ -127,6 +126,16 @@ class elementStyles {
 
 // ------------------------------
 
+function setDefaults() {
+    frontOptimalWidth = getFrontOptimalWidth();
+    frontDeeps = getDeeps([
+        config.walls['front'].top.deep,
+        config.walls['front'].bottom.deep
+    ]);
+}
+
+// ------------------------------
+
 function getDeeps(deepSets) {
     return {
         min: Math.min(...deepSets),
@@ -138,7 +147,7 @@ function getDeeps(deepSets) {
 
 function sumArray(arr) {
     return arr.reduce((result, item) => {
-        result += item;
+        result += item.value;
         return result;
     }, 0);
 }
@@ -146,30 +155,23 @@ function sumArray(arr) {
 // ------------------------------
 
 function getFrontOptimalWidth() {
-    let optimalWidth;
     const walls = config.walls;
+
     let widthSets = [
         sumArray(walls['front'].top.width),
         sumArray(walls['front'].bottom.width),
     ];
+    let optimalWidth = Math.max(...widthSets);
 
     // We have 2 or more sides
     if (Object.keys(walls).length > 1) {
         // Take minimal to connect front with side walls
         optimalWidth = Math.min(...widthSets);
     }
-    else {
-        // Take max to show full wall
-        optimalWidth = Math.max(...widthSets);
-    }
 
-    console.log('widthSets', widthSets);
-    console.log('optimalWidth', optimalWidth);
-
-    // console.log(walls);
     return optimalWidth;
 }
 
 // ------------------------------
 
-export {elementStyles};
+export {setDefaults, elementStyles};

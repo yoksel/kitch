@@ -1,11 +1,15 @@
 .surface {
     position: absolute;
     transform-style: preserve-3d;
-    background-color: hsla(0, 0%, 100%, .35);
     background-size: auto 100%;
     background-position: center center;
     border: 1px solid rgba(0,0,0,.5);
     box-sizing: border-box;
+
+    .block--empty &:not(.surface--front) {
+        border: 0;
+        background: transparent;
+    }
 }
 
 .surface--front {

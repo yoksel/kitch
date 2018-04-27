@@ -63,44 +63,59 @@
             <div class="wall wall--{{side}}">
                 {{#lines}}
                     <div class="line line--{{line}} {{line}}">
-                        <div class="block {{line}}__block">
-                            <div
-                                class="{{line}}__side
-                                    surface surface--side
-                                    surface--side-left"
-                                ></div>
-                            <div
-                                class="{{line}}__bottom
-                                    surface surface--bottom"></div>
-                            <div
-                                class="{{line}}__side
-                                    surface surface--side
-                                    surface--side-right"
-                                data-content="height"
-                                data-line="{{line}}"
-                                >
-                                <div
-                                    class="surface__size
-                                        surface__size--vertical">
-                                    <div class="surface__size-text"></div>
-                                </div>
-                            </div>
-                            <div
-                                class="{{line}}__top
-                                    surface surface--top"></div>
+                        {{#blocks}}
+                            <div class="block
+                                {{line}}__block
 
-                            {{#width}}
+                                {{#isEmpty}}
+                                    block--empty
+                                {{/isEmpty}}
+                                ">
+                                <div
+                                    class="{{line}}__side
+                                        surface surface--side
+                                        surface--side-left"
+                                    ></div>
+                                <div
+                                    class="{{line}}__bottom
+                                        surface surface--bottom"></div>
+                                <div
+                                    class="{{line}}__side
+                                        surface surface--side
+                                        surface--side-right"
+                                    data-wall="{{side}}"
+                                    data-line="{{line}}"
+                                    data-content="height"
+                                    data-value="{{value}}"
+                                    >
+                                    <div
+                                        class="surface__size
+                                            surface__size--vertical">
+                                        <div class="surface__size-text">
+                                            {{#if height}}
+                                                {{height}}mm
+                                            {{/if height}}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div
                                     class="{{line}}__front surface
                                         surface--front"
+                                    data-wall="{{side}}"
                                     data-line="{{line}}"
-                                    data-content="width">
+                                    data-pos="{{pos}}"
+                                    data-content="width"
+                                    data-value="{{value}}"
+                                    >
                                     <div class="surface__size">
-                                        <div class="surface__size-text"></div>
+                                        <div class="surface__size-text">{{value}}mm</div>
                                     </div>
                                 </div>
-                            {{/width}}
-                        </div>
+                                <div
+                                    class="{{line}}__top
+                                        surface surface--top"></div>
+                            </div>
+                        {{/blocks}}
                     </div>
                 {{/lines}}
             </div>

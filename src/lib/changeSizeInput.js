@@ -1,5 +1,5 @@
 import {config} from '../data/config';
-// import {updateSizes} from './sizesHandlers';
+import {updateSizes} from './Walls';
 
 const changeSizeInputElem = document.querySelector('.size-input');
 let currentSizeInput;
@@ -31,6 +31,8 @@ class changeSizeInput {
         return this.input;
     }
 
+    // ------------------------------
+
     getElements() {
         if (!this.configSizeInput) {
             this.configSizeInput = this.getConfigSizeInput();
@@ -43,6 +45,8 @@ class changeSizeInput {
             this.surfaceSizeInput = this.surfaceItem.querySelector('.surface__size-input');
         }
     }
+
+    // ------------------------------
 
     addActions() {
         this.input.addEventListener('input', () => {
@@ -68,20 +72,21 @@ class changeSizeInput {
 
     changeSizeForItem() {
         const size = this.input.value;
+        const wall = this.params.wall;
         const line = this.params.line;
         const content = this.params.content;
         const pos = this.params.pos;
+        let wallData = config.walls[wall];
 
         this.surfaceItem.style[content] = `${size}px`;
         this.surfaceText.innerHTML = `${size}mm`;
         this.surfaceSizeInput.value = size;
-        this.configSizeInput.value = size;
 
         if (pos !== undefined) {
-            config[line][content][pos] = +size;
+            wallData[line][content][pos].value = +size;
         }
         else {
-            config[line][content] = +size;
+            wallData[line][content].value = +size;
         }
 
         updateSizes();

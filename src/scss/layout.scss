@@ -34,6 +34,9 @@
     display: flex;
     transform-style: preserve-3d;
 }
+.block--empty {
+    transform: none !important;
+}
 
 .rotator {
     position: relative;

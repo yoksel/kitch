@@ -1,4 +1,4 @@
-import './styles.css';
+import './scss/styles.scss';
 
 import {config} from './data/config';
 import {dictionary} from './data/dictionary';
@@ -47,18 +47,14 @@ function showSizes() {
 
     surfaces.forEach(surfaceItem => {
         const contentKey = surfaceItem.dataset.content;
-        let size = getComputedStyle(surfaceItem)[contentKey];
-        const sizeRaw = size.replace('px', '');
-        size = `${sizeRaw}mm`;
-        const sizeTextElem = surfaceItem.querySelector('.surface__size-text');
-        sizeTextElem.innerHTML = size;
 
         const sizeElem = surfaceItem.querySelector('.surface__size');
         const inputParams = {
             container: 'surface',
             isClone: true,
-            value: sizeRaw,
+            value: surfaceItem.dataset.value,
             surfaceItem: surfaceItem,
+            wall: surfaceItem.dataset.wall,
             line: surfaceItem.dataset.line,
             content: surfaceItem.dataset.content,
             pos: surfaceItem.dataset.pos
