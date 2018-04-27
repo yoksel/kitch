@@ -1,0 +1,37 @@
+.chooser {
+    min-width: 140px;
+    margin-bottom: 50px;
+}
+
+.chooser__list-title {
+    margin: 0;
+    margin-top: 8px;
+    border-bottom: 1px solid #DDD;
+}
+
+.chooser__list {
+    width: 100%;
+    margin: 0;
+    margin-top: 5px;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+}
+
+.chooser__item {
+    width: 30px;
+    height: 30px;
+    margin: 0 6px 6px 0;
+    cursor: pointer;
+}
+
+.config .chooser__item {
+    width: 100%;
+    height: auto;
+}
+
+.chooser__item--current {
+    outline: 2px solid #333;
+    outline-offset: 2px;
+}

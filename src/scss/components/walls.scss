@@ -1,0 +1,22 @@
+.walls {
+    position: relative;
+    padding: 0;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    transform-style: preserve-3d;
+    transform: rotateY(25deg);
+    /*outline: 2px solid yellowgreen;*/
+}
+
+.walls--front-left {
+    left: 50%;
+    transform-origin: left;
+    transform: rotateY(-45deg);
+}
+
+.walls--front-right {
+    right: 50%;
+    transform-origin: right;
+    transform: rotateY(45deg);
+}

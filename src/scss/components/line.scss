@@ -1,0 +1,33 @@
+.line {
+    position: absolute;
+    width: 100%;
+    display: flex;
+}
+
+.wall--front .line {
+    justify-content: center;
+}
+
+.walls--front-left .wall--front .line {
+    justify-content: flex-end;
+}
+
+.walls--front-right .wall--front .line {
+    justify-content: flex-start;
+}
+
+.wall--left .line {
+    justify-content: flex-start;
+}
+
+.wall--right .line {
+    justify-content: flex-end;
+}
+
+.line--bottom {
+    bottom: 0;
+}
+
+.wall--right .line {
+    right: 0;
+}

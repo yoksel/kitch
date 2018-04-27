@@ -1,0 +1,146 @@
+.surface {
+    position: absolute;
+    transform-style: preserve-3d;
+    background-color: hsla(0, 0%, 100%, .35);
+    background-size: auto 100%;
+    background-position: center center;
+    border: 1px solid rgba(0,0,0,.5);
+    box-sizing: border-box;
+}
+
+.surface--front {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+}
+
+.surface--front:hover {
+    background: hsla(50, 100%, 60%, .5);
+    background-image: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='200 200 200 200'%3E%3Cpolygon fill='black' fill-opacity='.25' points='320 280 320 200 280 200 280 280 200 280 200 320 280 320 280 400 320 400 320 320 400 320 400 280'%3E%3C/polygon%3E%3C/svg%3E");
+    background-position: 50% 50%;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+}
+
+.surface--top {
+    width: 100%;
+    transform: rotateX(-90deg);
+    transform-origin: top;
+}
+
+.surface--bottom {
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    transform: rotateX(90deg);
+    transform-origin: bottom;
+}
+
+.surface--side {
+    transform-style: preserve-3d;
+}
+
+.surface--side-left {
+    left: 0;
+    transform-origin: left;
+    transform: rotateY(90deg);
+}
+
+.surface--side-right {
+    right: 0;
+    transform-origin: right;
+    transform: rotateY(-90deg);
+}
+
+.walls--front-left-right .wall--front .surface--side::before,
+.walls--front-left-right .wall--front .surface--side::after {
+    /* temporary hide */
+    /*content: "";*/
+    position: absolute;
+    background-color: hsla(0, 0%, 100%, .35);
+    border: 1px solid rgba(0,0,0,.5);
+    width: 100%;
+    padding-top: 100%;
+}
+
+.walls--front-left-right .wall--front .surface--side::before {
+    top: 0;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+}
+
+.walls--front-left-right .wall--front .surface--side::after {
+    bottom: 0;
+    transform-origin: bottom;
+    transform: rotateX(90deg);
+}
+
+
+.surface__size {
+    position: absolute;
+    bottom: 100%;
+    width: 100%;
+    display: flex;
+    text-align: center;
+    font-size: 12px;
+    text-shadow: 0 0 2px white, 0 0 2px white, 0 0 2px white;
+    cursor: pointer;
+    transition: background .25s;
+}
+
+.surface__size:hover {
+    background: rgba(0,0,0,.25);
+}
+
+.surface__size--vertical {
+   top: 0;
+   bottom: 0;
+   left: 100%;
+   width: auto;
+   flex-direction: column;
+   align-items: center;
+   transform: rotateY(90deg);
+   transform-origin: left;
+}
+
+.surface__size::before,
+.surface__size::after {
+    content: "";
+    flex-grow: 1;
+    justify-content: space-between;
+}
+
+.surface__size-text {
+    max-width: 100%;
+}
+.surface[data-is-editing='true'] .surface__size-text {
+    display: none;
+}
+
+.surface__size--vertical .surface__size-text {
+  display: flex;
+  justify-content: center;
+  transform: rotateZ(-90deg);
+}
+
+.size-input {
+    max-width: 100%;
+    font: inherit;
+    line-height: 1;
+}
+
+.size-input:focus {
+    outline: 2px solid rgba(0,0,0,.5);
+}
+
+.surface__size-input {
+    display: none;
+}
+
+.surface[data-is-editing='true'] .surface__size-input {
+    display: block;
+}
+
+.config__size-input {
+    margin: 0 3px 3px 0;
+}
