@@ -31,62 +31,13 @@ const chooserClasses = {
 
 // ------------------------------
 
-// addPatterns();
-
 createWalls();
-addBlocks();
-
-// setSizes();
-// setSizesStyles();
-
 showSizes();
 showConfig();
 
 rotatorRangeElem.addEventListener('input', function () {
     wallsElem.style.transform = `rotateY(${this.value}deg)`;
 });
-
-// ------------------------------
-
-function addBlocks() {
-    const blocks = [
-        {
-            name: 'top',
-            block: document.querySelectorAll('.top__front'),
-        },
-        {
-            name: 'bottom',
-            block: document.querySelectorAll('.bottom__front')
-        },
-    ];
-
-    blocks.forEach(item => {
-        // const name = item.name;
-        // let widthSet = config[name].width;
-        // const block = item.block;
-        // const parent = item.parent;
-
-        // if (typeof widthSet === 'object') {
-        //     widthSet.forEach((item, i) => {
-        //         let newBlock = block.cloneNode(true);
-
-        //         if (i === 0) {
-        //             newBlock = block;
-        //         }
-
-        //         newBlock = new HotSpot(newBlock);
-
-        //         newBlock.style.width = `${item}px`;
-        //         newBlock.dataset.line = name;
-        //         newBlock.dataset.pos = i;
-
-        //         if (i > 0) {
-        //             parent.appendChild(newBlock);
-        //         }
-        //     })
-        // }
-    });
-}
 
 // ------------------------------
 
