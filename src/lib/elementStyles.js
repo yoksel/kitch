@@ -58,6 +58,10 @@ class elementStyles {
                 width: frontOptimalWidth,
                 height: commonHeight
             });
+            this.stylesMap.set('.floor', {
+                width: config.floor.width,
+                height: config.floor.deep
+            });
         }
 
         this.stylesMap.set(wallClass, {
