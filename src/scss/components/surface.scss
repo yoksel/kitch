@@ -57,7 +57,7 @@
     /* temporary hide */
     /*content: "";*/
     position: absolute;
-    background-color: hsla(0, 0%, 100%, .35);
+    background-color: $transp-white;
     border: 1px solid rgba(0,0,0,.5);
     width: 100%;
     padding-top: 100%;
