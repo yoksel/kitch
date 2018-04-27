@@ -1,0 +1,8 @@
+.block {
+    display: flex;
+    transform-style: preserve-3d;
+
+    &--empty {
+        transform: none !important;
+    }
+}
