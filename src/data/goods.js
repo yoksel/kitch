@@ -1,63 +1,114 @@
+// ШхГхВ
 const goods = [
     {
         title: 'Electrolux ESL 94200 LO',
-        sizes: '45x55x82', // ШхГхВ
+        img: 'Electrolux-ESL-94200-LO',
+        sizes: {
+            width: '45',
+            deep: '55',
+            height: '82',
+        },
         type: 'dishwasher',
         price: '12 000'
     },
     {
         title: 'Indesit DISR 16B',
-        sizes: '44x55x82',
+        img: 'Indesit-DISR-16B',
+        sizes: {
+            width: '44',
+            deep: '55',
+            height: '82'
+        },
         type: 'dishwasher',
         price: '13 000'
     },
-    {
-        title: 'Bosch Serie 4 SMV 44KX00 R',
-        sizes: '59.8x55x81.5',
-        type: 'dishwasher',
-        price: '14 000'
-    },
+    // {
+    //     title: 'Bosch Serie 4 SMV 44KX00 R',
+    //     img: 'Bosch-Serie-4-SMV-44KX00-R',
+    //     sizes: {
+    //         width: '60',
+    //         deep: '55',
+    //         height: '82'
+    //     },
+    //     type: 'dishwasher',
+    //     price: '14 000'
+    // },
     {
         title: 'Bosch Serie 2 SMV24AX02R',
-        sizes: '59.8x55x81.5',
+        img: 'Bosch-Serie-2-SMV24AX02R',
+        sizes: {
+            width: '60',
+            deep: '55',
+            height: '82'
+        },
         type: 'dishwasher',
         price: '15 000'
     },
     {
         title: 'Bosch Serie 2 SMV23AX00R',
-        sizes: '59.8x55x81.5',
+        img: 'Bosch-Serie-2-SMV23AX00R',
+        sizes: {
+            width: '60',
+            deep: '55',
+            height: '82'
+        },
         type: 'dishwasher',
         price: '16 000'
     },
-    {
-        title: 'Bosch Serie 4 SPV45DX10R',
-        sizes: '44.8x55x81.5',
-        type: 'dishwasher',
-        price: '17 000'
-    },
-    {
-        title: 'Hansa ZIM 436 EH',
-        sizes: '45x57x82',
-        type: 'dishwasher',
-        price: '18 000'
-    },
+    // {
+    //     title: 'Bosch Serie 4 SPV45DX10R',
+    //     img: 'Bosch-Serie-4-SPV45DX10R',
+    //     sizes: {
+    //         width: '45',
+    //         deep: '55',
+    //         height: '82'
+    //     },
+    //     type: 'dishwasher',
+    //     price: '17 000'
+    // },
+    // {
+    //     title: 'Hansa ZIM 436 EH',
+    //     img: 'Hansa-ZIM-436-EH',
+    //     sizes: {
+    //         width: '45',
+    //         deep: '57',
+    //         height: '82'
+    //     },
+    //     type: 'dishwasher',
+    //     price: '18 000'
+    // },
 
     {
         title: 'Electrolux EZB 52410',
-        sizes: '59х59.4x56',
-        type: 'owen',
+        img: 'Electrolux-EZB-52410-AK',
+        sizes: {
+            width: '59',
+            deep: '60',
+            height: '56'
+        },
+        type: 'oven',
         price: '15 080'
     },
     {
         title: 'Hansa BOEI62000015',
-        sizes: '59.5х60x57.5',
-        type: 'owen',
+        img: 'Hansa-BOEI62000015',
+        sizes: {
+            width: '60',
+            deep: '60',
+            height: '58'
+        },
+        type: 'oven',
         price: '12 018'
     },
     {
         title: 'Bosch HBN211E4',
-        sizes: '59.5х59.5x56.7',
-        type: 'owen',
+        img: 'Bosch-HBN211E4',
+        sizes: {
+            width: '60',
+            deep: '60',
+            height: '57'
+        },
+        type: 'oven',
         price: '15 905'
     }
 ];
