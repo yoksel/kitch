@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Кубики на цветом фоне</title>
+        <title>Кубики в полёте</title>
         <meta name="robots" content="noindex">
         <style class="surface-sizes-css"></style>
         <style class="surface-patterns-css"></style>
@@ -19,63 +19,26 @@
             </aside>
 
             <div class="content">
-                <div class="scene wall">
-                    <div class="line line--top top">
-                        <div class="block block--top">
-                            <div class="top__side surface surface--side surface--side-left"></div>
-                            <div class="top__bottom surface surface--bottom"></div>
-                            <div
-                                class="top__side surface surface--side surface--side-right"
-                                data-content="height"
-                                data-line="top"
-                                >
-                                <div class="surface__size surface__size--vertical">
-                                    <div class="surface__size-text"></div>
-                                </div>
-                            </div>
-                            <div class="top__top surface surface--top"></div>
-                            <div
-                                class="top__front surface surface--front"
-                                data-content="width">
-                                <div class="surface__size">
-                                    <div class="surface__size-text"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- <div class="types">
+                    <ul class="types__list">
+                        <li class="types__item"> — </li>
+                        <li class="types__item"> &gt; </li>
+                    </ul>
+                </div> -->
 
-                    <div class="line line--bottom bottom">
-                        <div class="block block--bottom">
-                            <div class="bottom__side surface surface--side surface--side-left"></div>
-                            <div class="bottom__bottom surface surface--bottom"></div>
-                            <div
-                                class="bottom__side surface surface--side surface--side-right"
-                                data-content="height"
-                                data-line="bottom">
-                                <div class="surface__size surface__size--vertical">
-                                    <div class="surface__size-text"></div>
-                                </div>
-                            </div>
-                            <div class="bottom__top surface surface--top"></div>
-                            <div
-                                class="bottom__front surface surface--front"
-                                data-content="width">
-                                <div class="surface__size">
-                                    <div class="surface__size-text"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="scene walls">
                 </div>
 
                 <div class="rotator">
                     <input class="rotator__range" type="range"
-                        min="-60" max="60" step="5"
-                        value="45">
+                        min="-120" max="120" step="5"
+                        value="25">
                 </div>
+
+                <div class="goods"></div>
             </div>
 
-            <aside class="aside aside--design">
+            <!-- <aside class="aside aside--design">
                 <div class="chooser">
                     <div class="chooser__title">Цвет панелей</div>
                     <div class="chooser__content patterns"></div>
@@ -85,7 +48,7 @@
                     <div class="chooser__title">Цвет стены</div>
                     <div class="chooser__content walls"></div>
                 </div>
-            </aside>
+            </aside> -->
         </div>
 
         <div class="hidden">
@@ -94,5 +57,65 @@
                 min="0" max="1000"
                 class="size-input">
         </div>
+
+        <template id="wall-tmpl">
+
+            <div class="wall wall--{{side}}">
+                {{#lines}}
+                    <div class="line line--{{line}} {{line}}">
+                        <div class="block {{line}}__block">
+                            <div
+                                class="{{line}}__side
+                                    surface surface--side
+                                    surface--side-left"
+                                ></div>
+                            <div
+                                class="{{line}}__bottom
+                                    surface surface--bottom"></div>
+                            <div
+                                class="{{line}}__side
+                                    surface surface--side
+                                    surface--side-right"
+                                data-content="height"
+                                data-line="{{line}}"
+                                >
+                                <div
+                                    class="surface__size
+                                        surface__size--vertical">
+                                    <div class="surface__size-text"></div>
+                                </div>
+                            </div>
+                            <div
+                                class="{{line}}__top
+                                    surface surface--top"></div>
+
+                            {{#width}}
+                                <div
+                                    class="{{line}}__front surface
+                                        surface--front"
+                                    data-content="width">
+                                    <div class="surface__size">
+                                        <div class="surface__size-text"></div>
+                                    </div>
+                                </div>
+                            {{/width}}
+                        </div>
+                    </div>
+                {{/lines}}
+            </div>
+        </template>
+
+        <template id="card-tmpl">
+            {{# cards}}
+            <div class="card">
+                <img src="{{imgPath}}" alt="">
+
+                <b>{{title}}</b>
+
+                <div>{{sizesStr}}</div>
+                <div><b>{{price}}</b></div>
+            </div>
+            {{/ cards}}
+        </template>
     </body>
 </html>
