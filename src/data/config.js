@@ -8,7 +8,7 @@ const config = {
             top: {
                 width: [
                     {
-                        value: 60
+                        value: 80
                     },
                     {
                         value: 150
@@ -18,7 +18,7 @@ const config = {
                         isEmpty: true
                     },
                     {
-                        value: 65
+                        value: 80
                     }
                 ],
                 height: 60,
@@ -30,13 +30,13 @@ const config = {
                         value: 60
                     },
                     {
-                        value: 50
+                        value: 150
                     },
                     {
                         value: 110
                     },
                     {
-                        value: 45
+                        value: 60
                     }
                 ],
                 height: 100,
@@ -50,13 +50,10 @@ const config = {
                         value: 60
                     },
                     {
-                        value: 50
+                        value: 60
                     },
                     {
-                        value: 65
-                    },
-                    {
-                        value: 40
+                        value: 100
                     }
                 ],
                 height: 60,
@@ -68,13 +65,10 @@ const config = {
                         value: 60
                     },
                     {
-                        value: 50
+                        value: 60
                     },
                     {
-                        value: 45
-                    },
-                    {
-                        value: 40
+                        value: 100
                     }
                 ],
                 height: 100,
@@ -85,10 +79,10 @@ const config = {
             top: {
                 width: [
                     {
-                        value: 150
+                        value: 80
                     },
                     {
-                        value: 45
+                        value: 60
                     }
                 ],
                 height: 60,
@@ -97,10 +91,10 @@ const config = {
             bottom: {
                 width: [
                     {
-                        value: 150
+                        value: 60
                     },
                     {
-                        value: 45
+                        value: 60
                     }
                 ],
                 height: 100,

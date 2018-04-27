@@ -128,6 +128,7 @@ class elementStyles {
 
 function setDefaults() {
     frontOptimalWidth = getFrontOptimalWidth();
+
     frontDeeps = getDeeps([
         config.walls['front'].top.deep,
         config.walls['front'].bottom.deep

@@ -1,5 +1,6 @@
 .surface {
     position: absolute;
+    flex-shrink: 0;
     transform-style: preserve-3d;
     background-size: auto 100%;
     background-position: center center;
