@@ -1,92 +1,171 @@
-import {config} from './data/config';
+import {config} from '../data/config';
+
+const frontOptimalWidth = getFrontOptimalWidth();
+const frontDeeps = getDeeps([
+    config.walls['front'].top.deep,
+    config.walls['front'].bottom.deep
+]);
+
+class elementStyles {
+    constructor(key) {
+        this.key = key;
+        this.stylesMap = new Map();
+        this.config = config.walls[key];
+
+        this.setSizesToElems();
+    }
+
+    // ------------------------------
+
+    setSizesToElems() {
+        const deepsList = [
+            this.config.top.deep,
+            this.config.bottom.deep
+        ];
+        let deeps = getDeeps(deepsList);
+        let commonWidth = this.getWidth();
+        let commonHeight = this.config.verticalGap + this.config.top.height + this.config.bottom.height;
+        let wallTransform = 'none';
+        let wallWidth = commonWidth.max;
+        const lines = ['top', 'bottom'];
 
 
-const elementsMap = new Map();
+        if (this.key !== 'front') {
+            // Add deep to increase wall width
+            // and connect corners
+            wallWidth += frontDeeps.min;
+        }
+        else {
+            wallWidth = frontOptimalWidth;
+        }
 
-function setSizes() {
-    let commonWidth = getWidth();
+        if (this.key === 'left') {
+            wallTransform = `translateX(-${deeps.max}px) translateZ(${wallWidth}px) rotateY(90deg)`
+        }
+        else if (this.key === 'right') {
+            wallTransform = `translateX(${deeps.max}px) translateZ(${wallWidth}px) rotateY(-90deg)`
+        }
 
-    elementsMap.set('.wrapper', {
-        width: commonWidth.max,
-    });
-    elementsMap.set('.scene', {
-        width: commonWidth.max,
-        height: config.verticalGap + config.top.height + config.bottom.height
-    });
+        const wallClass = `.wall--${this.key}`;
 
-    elementsMap.set('.block--top', {
-        width: commonWidth.top,
-        height: config.top.height,
-        transform: `translateZ(${config.top.deep}px)`,
-    });
-    elementsMap.set('.top__top', {
-        width: commonWidth.top,
-        height: config.top.deep,
-    });
-    elementsMap.set('.top__bottom', {
-        width: commonWidth.top,
-        height: config.top.deep,
-    });
-    elementsMap.set('.top__side', {
-        width: config.top.deep,
-        height: config.top.height,
-    });
-    elementsMap.set('.top__front', {
-        width: config.top.width,
-        height: config.top.height,
-    });
+        // dirty hack
+        // if front wall, set walls & wrapper width
+        if (this.key === 'front') {
+            this.stylesMap.set('.wrapper', {
+                width: frontOptimalWidth,
+            });
+            this.stylesMap.set('.walls', {
+                width: frontOptimalWidth,
+                height: commonHeight
+            });
+        }
 
-    elementsMap.set('.block--bottom', {
-        width: commonWidth.bottom,
-        height: config.bottom.height,
-        transform: `translateZ(${config.bottom.deep}px)`,
-    });
-    elementsMap.set('.bottom__top', {
-        width: commonWidth.bottom,
-        height: config.bottom.deep,
-    });
-    elementsMap.set('.bottom__bottom', {
-        width: commonWidth.bottom,
-        height: config.bottom.deep,
-    });
-    elementsMap.set( '.bottom__side', {
-        width: config.bottom.deep,
-        height: config.bottom.height,
-    });
-    elementsMap.set('.bottom__front', {
-        width: config.bottom.width,
-        height: config.bottom.height,
-    });
+        this.stylesMap.set(wallClass, {
+            width: wallWidth,
+            transform: wallTransform,
+        });
+
+        lines.forEach(line => {
+            this.stylesMap.set(`${wallClass} .${line}__block`, {
+                width: commonWidth[line],
+                height: this.config[line].height,
+                transform: `translateZ(${this.config[line].deep}px)`,
+            });
+            this.stylesMap.set(`${wallClass} .${line}__top`, {
+                width: commonWidth[line],
+                height: this.config[line].deep,
+            });
+            this.stylesMap.set(`${wallClass} .${line}__bottom`, {
+                width: commonWidth[line],
+                height: this.config[line].deep,
+            });
+            this.stylesMap.set(`${wallClass} .${line}__side`, {
+                width: this.config[line].deep,
+                height: this.config[line].height,
+            });
+
+            this.config[line].width.forEach((itemWidth, i)=> {
+                const topWidthLength = this.config[line].width.length;
+                const selector = `${wallClass} .${line}__front:nth-child(${topWidthLength}n + ${i + 1})`;
+
+                this.stylesMap.set(selector, {
+                    width: itemWidth,
+                    height: this.config[line].height,
+                });
+            });
+        });
+    }
+
+    // ------------------------------
+
+    getWidth() {
+        let widthSets = [
+            this.config.top.width,
+            this.config.bottom.width
+        ];
+
+        widthSets = widthSets.map(widthSet => {
+            if (typeof widthSet === 'object') {
+                widthSet = sumArray(widthSet);
+            }
+
+            return widthSet;
+        });
+
+        return {
+            top: widthSets[0],
+            bottom: widthSets[1],
+            min: Math.min(...widthSets),
+            max: Math.max(...widthSets)
+        };
+    }
 }
 
 // ------------------------------
 
-function getWidth() {
-    let widthSets = [
-        config.top.width,
-        config.bottom.width
-    ];
-
-    widthSets = widthSets.map(widthSet => {
-
-        if (typeof widthSet === 'object') {
-
-            widthSet = widthSet.reduce((result, item) => {
-                result += item;
-                return result;
-            }, 0)
-        }
-
-        return widthSet;
-    });
-
+function getDeeps(deepSets) {
     return {
-        top: widthSets[0],
-        bottom: widthSets[1],
-        max: Math.max(...widthSets)
+        min: Math.min(...deepSets),
+        max: Math.max(...deepSets)
     };
 }
 
 // ------------------------------
 
-export {elementsMap, setSizes};
+function sumArray(arr) {
+    return arr.reduce((result, item) => {
+        result += item;
+        return result;
+    }, 0);
+}
+
+// ------------------------------
+
+function getFrontOptimalWidth() {
+    let optimalWidth;
+    const walls = config.walls;
+    let widthSets = [
+        sumArray(walls['front'].top.width),
+        sumArray(walls['front'].bottom.width),
+    ];
+
+    // We have 2 or more sides
+    if (Object.keys(walls).length > 1) {
+        // Take minimal to connect front with side walls
+        optimalWidth = Math.min(...widthSets);
+    }
+    else {
+        // Take max to show full wall
+        optimalWidth = Math.max(...widthSets);
+    }
+
+    console.log('widthSets', widthSets);
+    console.log('optimalWidth', optimalWidth);
+
+    // console.log(walls);
+    return optimalWidth;
+}
+
+// ------------------------------
+
+export {elementStyles};
