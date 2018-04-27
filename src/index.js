@@ -60,9 +60,6 @@ function addBlocks() {
         },
     ];
 
-
-    console.log(config);
-
     blocks.forEach(item => {
         // const name = item.name;
         // let widthSet = config[name].width;

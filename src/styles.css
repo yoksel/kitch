@@ -44,7 +44,7 @@ IMG {
     margin: 0 32px;
     flex-shrink: 0;
     flex-grow: 1;
-    outline: 1px solid green;
+    /*outline: 1px solid green;*/
 }
 
 .aside {
@@ -90,20 +90,20 @@ IMG {
 }
 
 .wall--front {
-    outline: 1px solid red;
+    /*outline: 1px solid red;*/
 }
 
 .wall--left {
     transform-origin: left;
 
-    outline: 1px solid green;
+    /*outline: 1px solid green;*/
 }
 
 .wall--right {
     right: 0;
     transform-origin: right;
 
-    outline: 1px solid blue;
+    /*outline: 1px solid blue;*/
 }
 
 
@@ -160,7 +160,8 @@ IMG {
     background-color: hsla(0, 0%, 100%, .35);
     background-size: auto 100%;
     background-position: center center;
-    outline: 1px solid rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.5);
+    box-sizing: border-box;
 }
 
 .surface--front {
@@ -191,16 +192,44 @@ IMG {
     transform-origin: bottom;
 }
 
+.surface--side {
+    transform-style: preserve-3d;
+}
+
 .surface--side-left {
     left: 0;
     transform-origin: left;
     transform: rotateY(90deg);
 }
+
 .surface--side-right {
     right: 0;
     transform-origin: right;
     transform: rotateY(-90deg);
 }
+
+.walls--front-left-right .wall--front .surface--side::before,
+.walls--front-left-right .wall--front .surface--side::after {
+    content: "";
+    position: absolute;
+    background-color: hsla(0, 0%, 100%, .35);
+    border: 1px solid rgba(0,0,0,.5);
+    width: 100%;
+    padding-top: 100%;
+}
+
+.walls--front-left-right .wall--front .surface--side::before {
+    top: 0;
+    transform-origin: top;
+    transform: rotateX(-90deg);
+}
+
+.walls--front-left-right .wall--front .surface--side::after {
+    bottom: 0;
+    transform-origin: bottom;
+    transform: rotateX(90deg);
+}
+
 
 .surface__size {
     position: absolute;
