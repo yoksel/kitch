@@ -5,7 +5,7 @@ import {dictionary} from './data/dictionary';
 
 // import {setSizes, setSizesStyles, updateSizes} from './lib/sizesHandlers';
 import {addPatterns, setPatterns} from './lib/patternsHandlers';
-import {changeSizeInput} from './lib/changeSizeInput';
+import {ChangeSizeInput} from './lib/ChangeSizeInput';
 import {HotSpot} from './lib/HotSpot';
 import {createWalls} from './lib/Walls';
 
@@ -59,7 +59,7 @@ function showSizes() {
             content: surfaceItem.dataset.content,
             pos: surfaceItem.dataset.pos
         };
-        const itemSizeInput = new changeSizeInput(inputParams);
+        const itemSizeInput = new ChangeSizeInput(inputParams);
         sizeElem.appendChild(itemSizeInput);
 
         sizeElem.addEventListener('click', () => {

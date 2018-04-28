@@ -1,6 +1,6 @@
 import Mustache from 'Mustache';
 import {config} from '../data/config';
-import {setDefaults, elementStyles} from './elementStyles';
+import {setDefaults, ElementStyles} from './ElementStyles';
 
 const wallTmpl = document.getElementById('wall-tmpl').innerHTML;
 const wallsElem = document.querySelector('.walls');
@@ -28,7 +28,7 @@ class Wall {
             ]
         };
 
-        this.elementStyles = new elementStyles(key);
+        this.elementStyles = new ElementStyles(key);
         this.stylesElem = document.createElement('style');
         document.head.appendChild(this.stylesElem);
 

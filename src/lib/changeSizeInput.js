@@ -4,7 +4,7 @@ import {updateSizes} from './Walls';
 const changeSizeInputElem = document.querySelector('.size-input');
 let currentSizeInput;
 
-class changeSizeInput {
+class ChangeSizeInput {
     constructor(params) {
         this.params = params;
         this.container = params.container;
@@ -139,4 +139,4 @@ document.addEventListener('keyup', (ev) => {
     }
 });
 
-export {changeSizeInput};
+export {ChangeSizeInput};

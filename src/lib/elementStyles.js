@@ -7,7 +7,7 @@ let frontDeeps;
 
 setDefaults();
 
-class elementStyles {
+class ElementStyles {
     constructor(key) {
         this.key = key;
         this.stylesMap = new Map();
@@ -199,4 +199,4 @@ function getFrontOptimalWidth() {
 
 // ------------------------------
 
-export {setDefaults, elementStyles};
+export {setDefaults, ElementStyles};
