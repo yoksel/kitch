@@ -76,17 +76,27 @@ class ChangeSizeInput {
         const line = this.params.line;
         const content = this.params.content;
         const pos = this.params.pos;
-        let wallData = config.walls[wall];
+        let targetConfig = config;
+
+        if (wall) {
+            targetConfig = config.walls[wall];
+        }
 
         this.surfaceItem.style[content] = `${size}px`;
         this.surfaceText.innerHTML = `${size}cm`;
         this.surfaceSizeInput.value = size;
 
         if (pos !== undefined) {
-            wallData[line][content][pos].value = +size;
+            // One of many items in wall
+            targetConfig[line][content][pos].value = +size;
+        }
+        else if(wall) {
+            // One item in wall
+            targetConfig[line][content] = +size;
         }
         else {
-            wallData[line][content].value = +size;
+            // One item in config
+            targetConfig[content][line] = +size;
         }
 
         updateSizes();

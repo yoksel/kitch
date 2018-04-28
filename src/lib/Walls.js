@@ -71,7 +71,7 @@ class Wall {
             let isPrevIsEmpty = prevBlock && prevBlock.isEmpty;
             let nextBlock = blocks[i + 1];
             let isNextIsEmpty = nextBlock && nextBlock.isEmpty;
-            block.height = (isLastWall && isLast) ? this.wallConfig[key].height : '';
+            block.height = (isLastWall && isLast) ? config.height[key] : '';
 
             if (isLast || isNextIsEmpty) {
                 block.posInRow.push('last');

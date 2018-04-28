@@ -19,9 +19,10 @@ class ElementStyles {
     // ------------------------------
 
     setSizesToElems() {
+        const heights = config.height;
         let deeps = getDeeps(this.config);
         let commonWidth = getWidths(this.config);
-        let commonHeight = this.config.verticalGap + this.config.top.height + this.config.bottom.height;
+        let commonHeight = this.config.verticalGap + heights.top + heights.bottom;
         let wallTransform = 'none';
         let wallWidth = commonWidth.max;
         const lines = ['top', 'bottom'];
@@ -75,7 +76,7 @@ class ElementStyles {
             }
 
             this.stylesMap.set(`${wallClass} .${line}__block`, {
-                height: this.config[line].height,
+                height: heights[line],
                 transform: `translateZ(${this.config[line].deep}px)`,
             });
             this.stylesMap.set(`${wallClass} .${line}__back`, {
@@ -92,7 +93,7 @@ class ElementStyles {
             });
             this.stylesMap.set(`${wallClass} .${line}__side`, {
                 width: this.config[line].deep,
-                height: this.config[line].height,
+                height: heights[line],
             });
 
             this.config[line].width.forEach((itemWidth, i)=> {
@@ -101,7 +102,7 @@ class ElementStyles {
 
                 this.stylesMap.set(selector, {
                     width: itemWidth.value,
-                    height: this.config[line].height,
+                    height: heights[line],
                 });
             });
         });

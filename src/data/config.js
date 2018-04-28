@@ -21,7 +21,6 @@ const config = {
                         value: 80
                     }
                 ],
-                height: 60,
                 deep: 40
             },
             bottom: {
@@ -39,7 +38,6 @@ const config = {
                         value: 60
                     }
                 ],
-                height: 100,
                 deep: 60
             },
         },
@@ -56,7 +54,6 @@ const config = {
                         value: 100
                     }
                 ],
-                height: 60,
                 deep: 40
             },
             bottom: {
@@ -71,7 +68,6 @@ const config = {
                         value: 100
                     }
                 ],
-                height: 100,
                 deep: 60
             },
         },
@@ -85,7 +81,6 @@ const config = {
                         value: 60
                     }
                 ],
-                height: 60,
                 deep: 40
             },
             bottom: {
@@ -97,10 +92,13 @@ const config = {
                         value: 60
                     }
                 ],
-                height: 100,
                 deep: 60
             },
         }
+    },
+    height: {
+        top: 60,
+        bottom: 120
     },
     verticalGap: 50
 }
