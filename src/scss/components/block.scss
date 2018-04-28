@@ -2,6 +2,7 @@
     flex-shrink: 0;
     display: flex;
     transform-style: preserve-3d;
+    backface-visibility: hidden;
 
     &--empty {
         transform: none !important;

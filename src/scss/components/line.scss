@@ -1,6 +1,7 @@
 .line {
     min-width: 100%;
     display: flex;
+    transform-style: preserve-3d;
 }
 
 .wall--front .line {
@@ -20,13 +21,10 @@
 }
 
 .wall--right .line {
+    right: 0;
     justify-content: flex-end;
 }
 
 .line--bottom {
     bottom: 0;
-}
-
-.wall--right .line {
-    right: 0;
 }

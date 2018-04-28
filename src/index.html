@@ -60,20 +60,23 @@
                             <div class="block
                                 {{line}}__block
 
+                                {{# posInRow}}
+                                    block--{{.}}
+                                {{/ posInRow}}
+
                                 {{#isEmpty}}
                                     block--empty
                                 {{/isEmpty}}
                                 ">
                                 <div
-                                    class="{{line}}__side
-                                        surface surface--side
-                                        surface--side-left"
-                                    ></div>
+                                    class="{{line}}__back
+                                        surface surface--back"></div>
                                 <div
                                     class="{{line}}__bottom
                                         surface surface--bottom"></div>
                                 <div
                                     class="{{line}}__side
+                                        {{line}}__side--right
                                         surface surface--side
                                         surface--side-right"
                                     data-wall="{{side}}"
@@ -92,6 +95,15 @@
                                     </div>
                                 </div>
                                 <div
+                                    class="{{line}}__side
+                                        {{line}}__side--left
+                                        surface surface--side
+                                        surface--side-left">
+                                </div>
+                                <div
+                                    class="{{line}}__top
+                                        surface surface--top"></div>
+                                <div
                                     class="{{line}}__front surface
                                         surface--front"
                                     data-wall="{{side}}"
@@ -104,9 +116,6 @@
                                         <div class="surface__size-text">{{value}}cm</div>
                                     </div>
                                 </div>
-                                <div
-                                    class="{{line}}__top
-                                        surface surface--top"></div>
                             </div>
                         {{/blocks}}
                     </div>

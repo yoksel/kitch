@@ -9,37 +9,21 @@ let wallsList = [];
 class Wall {
     constructor(params) {
         const key = params.key;
-        const isLast = params.isLast;
-        const wallConfig = config.walls[key];
-        wallConfig.verticalGap = config.verticalGap;
+        this.params = params;
+        this.wallConfig = config.walls[key];
+        this.wallConfig.verticalGap = config.verticalGap;
 
         let view = {
             side: key,
-            params: wallConfig,
+            params: this.wallConfig,
             lines: [
                 {
                     line: 'top',
-                    blocks: wallConfig.top.width.map((block, i) => {
-                        block.pos = i;
-
-                        if (i === wallConfig.top.width.length - 1) {
-                            block.height = isLast ? wallConfig.top.height : ''
-                        }
-
-                        return block;
-                    })
+                    blocks: this.extendBlocks('top')
                 },
                 {
                     line: 'bottom',
-                    blocks: wallConfig.bottom.width.map((block, i) => {
-                        block.pos = i;
-
-                        if (i === wallConfig.bottom.width.length - 1) {
-                            block.height = isLast ? wallConfig.bottom.height : ''
-                        }
-
-                        return block;
-                    })
+                    blocks: this.extendBlocks('bottom')
                 },
             ]
         };
@@ -72,6 +56,36 @@ class Wall {
         this.stylesElem.innerHTML = stylesList.join('\n');
     }
 
+    // ------------------------------
+
+    extendBlocks(key) {
+        const isLastWall = this.params.isLast;
+        let blocks = this.wallConfig[key].width;
+
+        blocks = blocks.map((block, i) => {
+            block.pos = i;
+            block.posInRow = [];
+            const isLast = i === blocks.length - 1;
+            const isFirst = i === 0;
+            let prevBlock = blocks[i - 1];
+            let isPrevIsEmpty = prevBlock && prevBlock.isEmpty;
+            let nextBlock = blocks[i + 1];
+            let isNextIsEmpty = nextBlock && nextBlock.isEmpty;
+            block.height = (isLastWall && isLast) ? this.wallConfig[key].height : '';
+
+            if (isLast || isNextIsEmpty) {
+                block.posInRow.push('last');
+            }
+
+            if (isFirst || isPrevIsEmpty) {
+                block.posInRow.push('first');
+            }
+
+            return block;
+        });
+
+        return blocks;
+    }
 
 };
 

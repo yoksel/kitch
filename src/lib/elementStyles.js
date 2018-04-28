@@ -70,13 +70,16 @@ class elementStyles {
 
         lines.forEach(line => {
             this.stylesMap.set(`${wallClass} .${line}__block`, {
-                // width: commonWidth[line],
                 height: this.config[line].height,
                 transform: `translateZ(${this.config[line].deep}px)`,
+            });
+            this.stylesMap.set(`${wallClass} .${line}__back`, {
+                transform: `translateZ(-${this.config[line].deep}px) rotateY(180deg)`,
             });
             this.stylesMap.set(`${wallClass} .${line}__top`, {
                 width: '100%',
                 height: this.config[line].deep,
+                transform: `translateZ(-${this.config[line].deep}px) rotateX(90deg)`
             });
             this.stylesMap.set(`${wallClass} .${line}__bottom`, {
                 width: '100%',
