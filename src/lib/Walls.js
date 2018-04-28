@@ -108,6 +108,7 @@ function createWalls() {
 
     for(let key in config.walls) {
         const params = config.walls[key];
+        const isFirst = key === 0;
         const isLast = key === keysList[keysList.length - 1];
         const wall = new Wall({
             key: key,

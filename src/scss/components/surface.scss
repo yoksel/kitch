@@ -6,7 +6,7 @@
     background-color: $transp-white;
     background-size: auto 100%;
     background-position: center center;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.5);
     box-sizing: border-box;
 
     .block--empty &:not(.surface--front) {
@@ -49,32 +49,32 @@
 }
 
 .surface--side {
+    background-color: transparent;
+    box-shadow: none;
 }
 
 .surface--side-left {
-    background-color: transparent;
     transform-origin: left;
     transform: rotateY(90deg);
 
     .block--first & {
-        background-color: $transp-white;
         backface-visibility: visible;
     }
 }
 
 .surface--side-right {
     right: 0;
-    background-color: transparent;
     transform-origin: right;
     transform: rotateY(-90deg);
 
     .block--last & {
-        background-color: $transp-white;
         backface-visibility: visible;
     }
 }
 
 
+/* Corners
+------------------------------*/
 .walls--front-left-right .wall--front .surface--side::before,
 .walls--front-left-right .wall--front .surface--side::after {
     /* temporary hide */
@@ -86,8 +86,6 @@
     padding-top: 100%;
 }
 
-/* Corners
-------------------------------*/
 .walls--front-left-right .wall--front .surface--side::before {
     top: 0;
     transform-origin: top;
@@ -106,6 +104,7 @@
     position: absolute;
     bottom: 100%;
     width: 100%;
+    backface-visibility: visible;
     display: flex;
     text-align: center;
     font-size: 12px;
