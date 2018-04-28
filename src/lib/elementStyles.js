@@ -1,5 +1,7 @@
 import {config} from '../data/config';
 
+let allDeeps = {};
+let allWidths = {};
 let frontOptimalWidth;
 let frontDeeps;
 
@@ -18,7 +20,7 @@ class elementStyles {
 
     setSizesToElems() {
         let deeps = getDeeps(this.config);
-        let commonWidth = this.getWidth();
+        let commonWidth = getWidths(this.config);
         let commonHeight = this.config.verticalGap + this.config.top.height + this.config.bottom.height;
         let wallTransform = 'none';
         let wallWidth = commonWidth.max;
@@ -34,10 +36,10 @@ class elementStyles {
         }
 
         if (this.key === 'left') {
-            wallTransform = `translateX(-${deeps.max}px) translateZ(${wallWidth}px) rotateY(90deg)`
+            wallTransform = `translateZ(${wallWidth}px) rotateY(90deg)`
         }
         else if (this.key === 'right') {
-            wallTransform = `translateX(${deeps.max}px) translateZ(${wallWidth}px) rotateY(-90deg)`
+            wallTransform = `translateZ(${wallWidth}px) rotateY(-90deg)`
         }
 
         const wallClass = `.wall--${this.key}`;
@@ -65,6 +67,7 @@ class elementStyles {
 
         lines.forEach(line => {
             if (this.key !== 'front') {
+                // Bind offset from the wall to front boxes deep
                 const stylesObj = {};
                 const paddingSide = this.key === 'left' ? 'right' : 'left';
                 stylesObj[`padding-${paddingSide}`] = `${frontDeeps[line]}px`;
@@ -103,35 +106,16 @@ class elementStyles {
             });
         });
     }
-
-    // ------------------------------
-
-    getWidth() {
-        let widthSets = [
-            this.config.top.width,
-            this.config.bottom.width
-        ];
-
-        widthSets = widthSets.map(widthSet => {
-            if (typeof widthSet === 'object') {
-                widthSet = sumArray(widthSet);
-            }
-
-            return widthSet;
-        });
-
-        return {
-            top: widthSets[0],
-            bottom: widthSets[1],
-            min: Math.min(...widthSets),
-            max: Math.max(...widthSets)
-        };
-    }
 }
 
 // ------------------------------
 
 function setDefaults() {
+    Object.keys(config.walls).forEach(wallKey => {
+        allDeeps[wallKey] = getDeeps(config.walls[wallKey]);
+        allWidths[wallKey] = getWidths(config.walls[wallKey]);
+    });
+
     frontOptimalWidth = getFrontOptimalWidth();
 
     frontDeeps = getDeeps(config.walls['front']);
@@ -155,6 +139,30 @@ function getDeeps(config) {
 
 // ------------------------------
 
+function getWidths(config) {
+    let widthSets = [
+        config.top.width,
+        config.bottom.width
+    ];
+
+    widthSets = widthSets.map(widthSet => {
+        if (typeof widthSet === 'object') {
+            widthSet = sumArray(widthSet);
+        }
+
+        return widthSet;
+    });
+
+    return {
+        top: widthSets[0],
+        bottom: widthSets[1],
+        min: Math.min(...widthSets),
+        max: Math.max(...widthSets)
+    };
+}
+
+// ------------------------------
+
 function sumArray(arr) {
     return arr.reduce((result, item) => {
         result += item.value;
@@ -166,18 +174,25 @@ function sumArray(arr) {
 
 function getFrontOptimalWidth() {
     const walls = config.walls;
+    // Take all walls deeps except front
+    const allDeepsKeys = Object.keys(allDeeps)
+        .filter(key => key !== 'front');
+    let minFrontWidth = allWidths['front'].min;
 
-    let widthSets = [
-        sumArray(walls['front'].top.width),
-        sumArray(walls['front'].bottom.width),
-    ];
-    let optimalWidth = Math.max(...widthSets);
+    let widthSets = {
+        top: allWidths['front'].top,
+        bottom: allWidths['front'].bottom
+    };
 
-    // We have 2 or more sides
-    if (Object.keys(walls).length > 1) {
-        // Take minimal to connect front with side walls
-        optimalWidth = Math.min(...widthSets);
+    // If sides exist
+    if (allDeepsKeys.length > 0) {
+        allDeepsKeys.forEach(deepKey => {
+            // Add side deep to front max width
+            widthSets.top += allDeeps[deepKey].top;
+            widthSets.bottom += allDeeps[deepKey].bottom;
+        });
     }
+    let optimalWidth = Math.max(...Object.values(widthSets));
 
     return optimalWidth;
 }
