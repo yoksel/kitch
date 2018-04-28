@@ -79,7 +79,7 @@ class ChangeSizeInput {
         let wallData = config.walls[wall];
 
         this.surfaceItem.style[content] = `${size}px`;
-        this.surfaceText.innerHTML = `${size}mm`;
+        this.surfaceText.innerHTML = `${size}cm`;
         this.surfaceSizeInput.value = size;
 
         if (pos !== undefined) {
