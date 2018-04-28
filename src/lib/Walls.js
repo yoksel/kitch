@@ -43,7 +43,6 @@ class Wall {
                 },
             ]
         };
-        console.log(view);
 
         this.elementStyles = new elementStyles(key);
         this.stylesElem = document.createElement('style');
@@ -79,15 +78,12 @@ class Wall {
 // ------------------------------
 
 function updateSizes() {
-    console.log(wallsList);
     setDefaults();
 
     wallsList.forEach(wall => {
         wall.elementStyles.setSizesToElems();
         wall.setSizesStyles();
-    })
-    // setSizesToElems();
-
+    });
 }
 
 // ------------------------------
@@ -109,7 +105,6 @@ function createWalls() {
     }
 
     wallsElem.classList.add(`walls--${keysList.join('-')}`);
-
 }
 
 export {createWalls, updateSizes};
