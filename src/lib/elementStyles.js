@@ -17,22 +17,17 @@ class elementStyles {
     // ------------------------------
 
     setSizesToElems() {
-        const deepsList = [
-            this.config.top.deep,
-            this.config.bottom.deep
-        ];
-        let deeps = getDeeps(deepsList);
+        let deeps = getDeeps(this.config);
         let commonWidth = this.getWidth();
         let commonHeight = this.config.verticalGap + this.config.top.height + this.config.bottom.height;
         let wallTransform = 'none';
         let wallWidth = commonWidth.max;
         const lines = ['top', 'bottom'];
 
-
         if (this.key !== 'front') {
             // Add deep to increase wall width
             // and connect corners
-            wallWidth += frontDeeps.min;
+            wallWidth += frontDeeps.max;
         }
         else {
             wallWidth = frontOptimalWidth;
@@ -69,6 +64,13 @@ class elementStyles {
         });
 
         lines.forEach(line => {
+            if (this.key !== 'front') {
+                const stylesObj = {};
+                const paddingSide = this.key === 'left' ? 'right' : 'left';
+                stylesObj[`padding-${paddingSide}`] = `${frontDeeps[line]}px`;
+                this.stylesMap.set(`${wallClass} .${line}`, stylesObj);
+            }
+
             this.stylesMap.set(`${wallClass} .${line}__block`, {
                 height: this.config[line].height,
                 transform: `translateZ(${this.config[line].deep}px)`,
@@ -132,16 +134,20 @@ class elementStyles {
 function setDefaults() {
     frontOptimalWidth = getFrontOptimalWidth();
 
-    frontDeeps = getDeeps([
-        config.walls['front'].top.deep,
-        config.walls['front'].bottom.deep
-    ]);
+    frontDeeps = getDeeps(config.walls['front']);
 }
 
 // ------------------------------
 
-function getDeeps(deepSets) {
+function getDeeps(config) {
+    const deepSets = [
+        config['top'].deep,
+        config['bottom'].deep
+    ];
+
     return {
+        top: deepSets[0],
+        bottom: deepSets[1],
         min: Math.min(...deepSets),
         max: Math.max(...deepSets)
     };

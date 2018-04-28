@@ -1,5 +1,4 @@
 .line {
-    min-width: 100%;
     display: flex;
     transform-style: preserve-3d;
 }
@@ -17,12 +16,12 @@
 }
 
 .wall--left .line {
-    justify-content: flex-start;
+    justify-content: flex-end;
 }
 
 .wall--right .line {
     right: 0;
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 .line--bottom {
